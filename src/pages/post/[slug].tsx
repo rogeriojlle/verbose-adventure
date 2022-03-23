@@ -1,4 +1,7 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { useState } from 'react';
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
+import { useRouter } from 'next/router';
+import { ParsedUrlQuery } from 'querystring';
 
 import { getPrismicClient } from '../../services/prismic';
 
@@ -26,20 +29,25 @@ interface PostProps {
   post: Post;
 }
 
-// export default function Post() {
-//   // TODO
-// }
+export default function Post(props: Post) {
+  const { isFallback } = useRouter();
+  return <>{isFallback ? 'Carregando...' : props.data.title}</>;
+}
 
-// export const getStaticPaths = async () => {
-//   const prismic = getPrismicClient();
-//   const posts = await prismic.query(TODO);
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: true,
+  };
+};
 
-//   // TODO
-// };
-
-// export const getStaticProps = async context => {
-//   const prismic = getPrismicClient();
-//   const response = await prismic.getByUID(TODO);
-
-//   // TODO
-// };
+export const getStaticProps: GetStaticProps = async context => {
+  const prismic = getPrismicClient();
+  const slug = Array.isArray(context.params.slug)
+    ? context.params.slug[0]
+    : context.params.slug;
+  const response = await prismic.getByUID('posts', slug, {});
+  return {
+    props: response,
+  };
+};

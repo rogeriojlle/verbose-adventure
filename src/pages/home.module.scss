@@ -1,1 +1,23 @@
-// TODO
+.article:not(:last-child){
+  margin-bottom: 1rem;
+}
+
+.articleHead{
+  color: var(--Heading);
+  font-weight: bold;
+  font-size: 1.75rem;
+}
+
+.articleContent{
+  color: var(--Body);
+  font-size: 1.125rem;
+}
+
+.articleInfo{
+  color: var(--Info);
+  font-size: 0.875rem;
+}
+
+.articleInfo span{
+  margin-right: 2rem;
+}
