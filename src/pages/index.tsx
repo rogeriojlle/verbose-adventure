@@ -4,6 +4,7 @@ import { format } from '../helpers/date-fns';
 import { useState } from 'react';
 
 import { getPrismicClient, prismicH } from '../services/prismic';
+import Prismic from '@prismicio/client';
 
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
@@ -82,12 +83,14 @@ export default function Home(props: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch('http://localhost:3000/api/prismicgetposts', {
-    method: 'POST',
-    body: JSON.stringify({ page: 1 }),
-  });
+  const prismic = getPrismicClient();
 
-  const postsPagination = await res.json();
+  const postsPagination = await prismic.query(
+    Prismic.Predicates.at('document.type', 'posts'),
+    {
+      pageSize: 1,
+    }
+  );
 
   return {
     props: { postsPagination },

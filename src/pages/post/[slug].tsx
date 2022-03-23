@@ -30,8 +30,10 @@ interface PostProps {
 }
 
 export default function Post(props: Post) {
+  console.log(props);
   const { isFallback } = useRouter();
-  return <>{isFallback ? 'Carregando...' : props.data.title}</>;
+
+  return <>{isFallback ? 'Carregando...' : <h1>lalala</h1>} </>;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

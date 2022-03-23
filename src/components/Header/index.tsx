@@ -1,13 +1,16 @@
 import styles from './header.module.scss';
 import commonStyles from '../../styles/common.module.scss';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export function Header() {
   return (
     <header className={`${styles.component} ${commonStyles.component}`}>
-      <div className={styles.logo}>
-        <span className={styles.icon}>{`</> `}</span>
-        <span>spacetraveling.</span>
-      </div>
+      <Link href="/">
+        <a className={styles.logo}>
+          <Image width={600} height={100} alt={'logo'} src="/logo.svg" />
+        </a>
+      </Link>
       <nav>
         <a href="#">Home</a>
         <a href="#">Posts</a>
